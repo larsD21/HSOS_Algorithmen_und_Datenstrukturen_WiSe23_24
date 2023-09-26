@@ -1,6 +1,6 @@
 public class Fibbo {
     public static void main(String[] args){
-        System.out.println(fibbo(12));
+        System.out.println(fibbo(4));
     }
 
     private static long fibbo(long n){
