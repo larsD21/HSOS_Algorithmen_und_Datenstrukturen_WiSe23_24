@@ -56,8 +56,4 @@ public class HeapSort {
         return 2 * i + 2;
     }
     
-
-    private static int parent(int i){
-        return i/2;
-    }
 }
