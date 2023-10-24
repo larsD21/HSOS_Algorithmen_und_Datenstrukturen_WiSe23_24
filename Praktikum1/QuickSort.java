@@ -2,6 +2,7 @@ package Praktikum1;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -42,6 +43,16 @@ public class QuickSort {
         System.out.println("Medium: "+ timeMedium);
         System.out.println("Big: "+ timeBig);
         System.out.println("Sorted " + timeSorted);
+
+        try(FileWriter file = new FileWriter("Praktikum1/results.txt", true)){
+            file.write("Standart:\n");
+            file.write("Small: "+ timeSmallest + "\n");
+            file.write("Medium: "+ timeMedium + "\n");
+            file.write("Big: "+ timeBig + "\n");
+            file.write("Sorted " + timeSorted + "\n");
+        } catch(IOException e){
+            e.printStackTrace();
+        }
 
     }
 
