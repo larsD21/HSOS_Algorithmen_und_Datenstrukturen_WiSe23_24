@@ -73,7 +73,7 @@ public class QuickSortMedian3 {
     }
 
     private static int medianOfThree(int[] A, int p, int r) {
-        int m = p + (r - p) / 2;
+        int m = (r + p) / 2;
         int[] arr = {p, m, r};
 
         if(A[arr[0]] > A[arr[1]]){
@@ -135,4 +135,5 @@ public class QuickSortMedian3 {
         }
         return arr;
     }
+
 }
