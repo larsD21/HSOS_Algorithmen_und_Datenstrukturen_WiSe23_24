@@ -12,6 +12,11 @@ public class QuickSort {
         int[] medium = readFile("Praktikum1/1000000.txt");
         int[] big = readFile("Praktikum1/5000000.txt");
 
+        int[] preSorted = new int[100000];
+        for(int i = 0; i < preSorted.length; i++){
+            preSorted[i] = i;
+        }
+        
         long startSmallest = System.currentTimeMillis();
         int[] sortedSmallest = quickSort(smallest, 0, smallest.length-1);
         long endSmallest = System.currentTimeMillis();
@@ -23,13 +28,6 @@ public class QuickSort {
         long startBig = System.currentTimeMillis();
         int[] sortedBig = quickSort(big, 0, big.length-1);
         long endBig = System.currentTimeMillis();
-
-
-
-        int[] preSorted = new int[100000];
-        for(int i = 0; i < preSorted.length; i++){
-            preSorted[i] = i;
-        }
 
         long startSorted = System.currentTimeMillis();
         preSorted = quickSort(preSorted, 0, preSorted.length-1);
@@ -44,6 +42,7 @@ public class QuickSort {
         System.out.println("Big: "+ timeBig);
         System.out.println("Sorted " + timeSorted);
 
+        //https://docs.oracle.com/javase/8/docs/api/java/io/FileWriter.html
         try(FileWriter file = new FileWriter("Praktikum1/results.txt", true)){
             file.write("Standart:\n");
             file.write("Small: "+ timeSmallest + "\n");
@@ -72,22 +71,23 @@ public class QuickSort {
         for(int j = p; j < r; j++){
             if(A[j] <= pivot){
                 i = i+1;
-                int temp = A[i];
-                A[i] = A[j];
-                A[j] = temp;
+                tausche(A, i, j);
             }
         }
-        int temp = A[i+1];
-        A[i+1] = A[r];
-        A[r] = temp;
+        tausche(A, i + 1, r);
         return i+1;
     }
 
+    private static void tausche(int[] A, int i, int j) {
+        int temp = A[i];
+        A[i] = A[j];
+        A[j] = temp;
+    }
 
 
+    //https://www.geeksforgeeks.org/read-file-into-an-array-in-java/
     public static int[] readFile(String fileName){
         ArrayList<Integer> list = new ArrayList<>();
-
         try(BufferedReader reader = new BufferedReader(new FileReader(fileName))){
             String line;
             while((line = reader.readLine()) != null){

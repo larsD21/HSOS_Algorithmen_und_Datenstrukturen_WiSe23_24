@@ -13,9 +13,11 @@ public class RandomNumbers {
 
     public static void randomNumbers(int cnt){
         Random random = new Random();
+        //https://docs.oracle.com/javase/8/docs/api/java/io/FileWriter.html
         try(FileWriter file = new FileWriter("Praktikum1/"+ cnt + ".txt")){
             for(int i = 0; i < cnt; i++) {
-                int randomNum = random.nextInt(0,5000001);
+                //https://docs.oracle.com/javase/8/docs/api/java/util/Random.html
+                int randomNum = random.nextInt(5000001);
                 file.write(Integer.toString(randomNum) + "\n");
             }
         } catch(IOException e){

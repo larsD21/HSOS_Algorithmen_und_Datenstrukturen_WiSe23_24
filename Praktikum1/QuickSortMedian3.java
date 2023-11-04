@@ -11,6 +11,10 @@ public class QuickSortMedian3 {
         int[] smallest = readFile("Praktikum1/100000.txt");
         int[] medium = readFile("Praktikum1/1000000.txt");
         int[] big = readFile("Praktikum1/5000000.txt");
+        int[] preSorted = new int[100000];
+        for(int i = 0; i < preSorted.length; i++){
+            preSorted[i] = i;
+        }
 
         long startSmallest = System.currentTimeMillis();
         int[] sortedSmallest = quickSort(smallest, 0, smallest.length-1);
@@ -24,30 +28,16 @@ public class QuickSortMedian3 {
         int[] sortedBig = quickSort(big, 0, big.length-1);
         long endBig = System.currentTimeMillis();
 
-
-
-        int[] preSorted = new int[100000];
-            for(int i = 0; i < preSorted.length; i++){
-            preSorted[i] = i;
-        }
-
         long startSorted = System.currentTimeMillis();
         preSorted = quickSort(preSorted, 0, preSorted.length-1);
         long endSorted = System.currentTimeMillis();
-
-        for(Integer i : sortedSmallest){
-            System.out.println(i);
-        }
 
         long timeSmallest = endSmallest - startSmallest;
         long timeMedium = endMedium - startMedium;
         long timeBig = endBig - startBig;
         long timeSorted = endSorted - startSorted;
-        System.out.println("Small: "+ timeSmallest);
-        System.out.println("Medium: "+ timeMedium);
-        System.out.println("Big: "+ timeBig);
-        System.out.println("Sorted " + timeSorted);
 
+        //https://docs.oracle.com/javase/8/docs/api/java/io/FileWriter.html
         try(FileWriter file = new FileWriter("Praktikum1/results.txt", true)){
             file.write("MedianOfThree:\n");
             file.write("Small: "+ timeSmallest + "\n");
@@ -57,15 +47,13 @@ public class QuickSortMedian3 {
         } catch(IOException e){
             e.printStackTrace();
         }
-
-
     }
 
 
     public static int[] quickSort(int[] A, int p, int r) {
         if (p < r) {
             int pivotIndex = medianOfThree(A, p, r);
-            int s = lomutoPartition(A, p, r, pivotIndex);
+            int s = lomutoPartition(A, p, r);
             quickSort(A, p, s - 1);
             quickSort(A, s + 1, r);
         }
@@ -77,49 +65,38 @@ public class QuickSortMedian3 {
         int[] arr = {p, m, r};
 
         if(A[arr[0]] > A[arr[1]]){
-            int temp = arr[0];
-            arr[0] = arr[1];
-            arr[1] = temp;
-        }
-
-        if(A[arr[0]] > A[arr[2]]){
-            int temp = arr[0];
-            arr[0] = arr[2];
-            arr[2] = temp;
+            tausche(arr,0, 1);
         }
 
         if(A[arr[1]]>A[arr[2]]){
-            int temp = arr[2];
-            arr[2] = arr[1];
-            arr[1] = temp;
+            tausche(arr, 1, 2);
         }
 
+        tausche(A, arr[1], r);
         return arr[1];
     }
 
-    private static int lomutoPartition(int[] A, int p, int r, int pivotIndex) {
-        int pivot = A[pivotIndex];
-        A[pivotIndex] = A[r];
-        A[r] = pivot;
-
+    private static int lomutoPartition(int[] A, int p, int r) {
         int i = p - 1;
         for (int j = p; j < r; j++) {
-            if (A[j] <= pivot) {
+            if (A[j] <= A[r]) {
                 i = i + 1;
-                int temp = A[i];
-                A[i] = A[j];
-                A[j] = temp;
+                tausche(A, i, j);
             }
         }
-        int temp = A[i + 1];
-        A[i + 1] = A[r];
-        A[r] = temp;
+        tausche(A, i + 1, r);
         return i + 1;
     }
 
+    private static void tausche(int[] arr, int i, int j) {
+        int temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+
+    //https://www.geeksforgeeks.org/read-file-into-an-array-in-java/
     public static int[] readFile(String fileName){
         ArrayList<Integer> list = new ArrayList<>();
-
         try(BufferedReader reader = new BufferedReader(new FileReader(fileName))){
             String line;
             while((line = reader.readLine()) != null){
