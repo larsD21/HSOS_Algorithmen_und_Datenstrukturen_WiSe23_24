@@ -8,14 +8,12 @@ import java.util.ArrayList;
 
 public class QuickSort {
     public static void main(String[] args){
-        int[] smallest = readFile("Praktikum1/100000.txt");
-        int[] medium = readFile("Praktikum1/1000000.txt");
-        int[] big = readFile("Praktikum1/5000000.txt");
+        int[] smallest = readFile("Praktikum1/Unsorted_100000.txt");
+        int[] medium = readFile("Praktikum1/Unsorted_1000000.txt");
+        int[] big = readFile("Praktikum1/Unsorted_5000000.txt");
 
-        int[] preSorted = new int[100000];
-        for(int i = 0; i < preSorted.length; i++){
-            preSorted[i] = i;
-        }
+        int[] preSorted = readFile("Praktikum1/Sorted_100000.txt");
+
         
         long startSmallest = System.currentTimeMillis();
         int[] sortedSmallest = quickSort(smallest, 0, smallest.length-1);
@@ -37,10 +35,6 @@ public class QuickSort {
         long timeMedium = endMedium - startMedium;
         long timeBig = endBig - startBig;
         long timeSorted = endSorted - startSorted;
-        System.out.println("Small: "+ timeSmallest);
-        System.out.println("Medium: "+ timeMedium);
-        System.out.println("Big: "+ timeBig);
-        System.out.println("Sorted " + timeSorted);
 
         //https://docs.oracle.com/javase/8/docs/api/java/io/FileWriter.html
         try(FileWriter file = new FileWriter("Praktikum1/results.txt", true)){
@@ -52,7 +46,6 @@ public class QuickSort {
         } catch(IOException e){
             e.printStackTrace();
         }
-
     }
 
     public static int[] quickSort(int[] A, int p, int r){

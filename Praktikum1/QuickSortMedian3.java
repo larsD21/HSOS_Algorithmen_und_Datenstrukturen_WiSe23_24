@@ -1,5 +1,7 @@
 package Praktikum1;
 
+import Sortieren.TestSorted;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -8,13 +10,11 @@ import java.util.ArrayList;
 
 public class QuickSortMedian3 {
     public static void main(String[] args){
-        int[] smallest = readFile("Praktikum1/100000.txt");
-        int[] medium = readFile("Praktikum1/1000000.txt");
-        int[] big = readFile("Praktikum1/5000000.txt");
-        int[] preSorted = new int[100000];
-        for(int i = 0; i < preSorted.length; i++){
-            preSorted[i] = i;
-        }
+        int[] smallest = readFile("Praktikum1/Unsorted_100000.txt");
+        int[] medium = readFile("Praktikum1/Unsorted_1000000.txt");
+        int[] big = readFile("Praktikum1/Unsorted_5000000.txt");
+
+        int[] preSorted = readFile("Praktikum1/Sorted_100000.txt");
 
         long startSmallest = System.currentTimeMillis();
         int[] sortedSmallest = quickSort(smallest, 0, smallest.length-1);
@@ -52,7 +52,7 @@ public class QuickSortMedian3 {
 
     public static int[] quickSort(int[] A, int p, int r) {
         if (p < r) {
-            int pivotIndex = medianOfThree(A, p, r);
+            medianOfThree(A, p, r);
             int s = lomutoPartition(A, p, r);
             quickSort(A, p, s - 1);
             quickSort(A, s + 1, r);
@@ -60,9 +60,9 @@ public class QuickSortMedian3 {
         return A;
     }
 
-    private static int medianOfThree(int[] A, int p, int r) {
-        int m = (r + p) / 2;
-        int[] arr = {p, m, r};
+    private static void medianOfThree(int[] A, int p, int r) {
+        int mid = (r + p) / 2;
+        int[] arr = {p, mid, r};
 
         if(A[arr[0]] > A[arr[1]]){
             tausche(arr,0, 1);
@@ -73,7 +73,6 @@ public class QuickSortMedian3 {
         }
 
         tausche(A, arr[1], r);
-        return arr[1];
     }
 
     private static int lomutoPartition(int[] A, int p, int r) {
