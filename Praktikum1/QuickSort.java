@@ -48,6 +48,7 @@ public class QuickSort {
         }
     }
 
+    //basierend auf "Folien_4_Suchen_Sortieren" Seite 13
     public static int[] quickSort(int[] A, int p, int r){
         if(p < r){
             int s = lomutoPartition(A, p, r);
@@ -57,6 +58,7 @@ public class QuickSort {
         return A;
     }
 
+    //basierend auf "Folien_4_Suchen_Sortieren" Seite 14
     private static int lomutoPartition(int[] A, int p, int r){
         int pivot = A[r];
         int i = p-1;
