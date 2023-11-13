@@ -24,9 +24,7 @@ public class MinPQ {
         int i = currentsize - 1;
         this.pqElements[i] = n;
         while (i > 0 && pqElements[parent(i)].getPriority() > pqElements[i].getPriority()) {
-            PQElement temp = pqElements[i];
-            pqElements[i] = pqElements[parent(i)];
-            pqElements[parent(i)] = temp;
+            tausche(i, parent(i));
             i = parent(i);
         }
         return true;
@@ -37,7 +35,7 @@ public class MinPQ {
     }
 
     public PQElement extractElement() {
-        if (currentsize == 0) {
+        if (isEmpty()) {
             return null;
         }
         PQElement returnElement = this.pqElements[0];
@@ -50,11 +48,11 @@ public class MinPQ {
     }
 
     public String extractData() {
-        PQElement pqElement = extractElement();
-        if (pqElement == null) {
-            return null;
+        if (!isEmpty()) {
+            return extractElement().getData();
         } else {
-            return pqElement.getData();
+            System.err.println("Heap underflow");
+            return null;
         }
     }
 
@@ -68,40 +66,32 @@ public class MinPQ {
         if (rightChildIndex < this.currentsize && this.pqElements[rightChildIndex].getPriority() < this.pqElements[smallest].getPriority()) {
             smallest = rightChildIndex;
         }
-        if (smallest != i) {
-            PQElement temp = this.pqElements[i];
-            this.pqElements[i] = this.pqElements[smallest];
-            this.pqElements[smallest] = temp;
+        if (smallest != i) {;
+            tausche(i, smallest);
             minHeapify(smallest);
         }
     }
 
-    public void update(String s, double n){
-        int index = -1;
-        for (int i = 0; i < currentsize; i++){
-            if(pqElements[i].getData().equals(s)){
-                index = i;
-                break;
+    public void update(String s, double n) {
+        for (int i = 0; i < currentsize; i++) {
+            if (pqElements[i].getData().equals(s)) {
+                if (pqElements[i].getPriority() > n) {
+                    pqElements[i].setPriority(n);
+                    int index = i;
+                    while (index > 0 && pqElements[parent(index)].getPriority() > pqElements[index].getPriority()) {
+                        tausche(index, parent(index));
+                        index = parent(index);
+                    }
+                    return;
+                }
             }
         }
+    }
 
-        if(index == -1){
-            System.err.println("Element not found");
-            return;
-        }
-
-        if(n >pqElements[index].getPriority()){
-            System.err.println("New priority of Element " + pqElements[index].getData() + " is larger or equal");
-            return;
-        }
-        System.out.println("Element: " + s + " changed prio from " + pqElements[index].getPriority() + " to " + n);
-        pqElements[index].setPriority(n);
-        while (index > 0 && pqElements[parent(index)].getPriority() > pqElements[index].getPriority()) {
-            PQElement temp = pqElements[index];
-            pqElements[index] = pqElements[parent(index)];
-            pqElements[parent(index)] = temp;
-            index = parent(index);
-        }
+    private void tausche(int i, int y){
+        PQElement temp = this.pqElements[i];
+        this.pqElements[i] = this.pqElements[y];
+        this.pqElements[y] = temp;
     }
 
     private int left(int i) {
