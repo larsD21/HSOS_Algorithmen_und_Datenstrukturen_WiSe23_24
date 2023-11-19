@@ -65,7 +65,11 @@ public class BST {
             int leftHeight = height(node.getLeft());
             int rightHeight = height(node.getRight());
 
-            return 1 + Math.max(leftHeight, rightHeight);
+            if(leftHeight>rightHeight){
+                return 1 + leftHeight;
+            } else{
+                return 1 + rightHeight;
+            }
         }
     }
 
