@@ -55,7 +55,8 @@ public class BST {
     }
 
     public int height() {
-        return height(this.root);
+        //-1 weil sonst die wurzel als hoehe mit gerechnet wird
+        return height(this.root)-1;
     }
 
     private int height(BSTNode node) {
