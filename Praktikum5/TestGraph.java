@@ -6,9 +6,8 @@ public class TestGraph {
 
         DirectedGraph directedGraph = DirectedGraph.readGraph(path);
 
-        //directedGraph.printNodes();
-        System.out.println(directedGraph.BFS("Ibbenbueren", "Melle", 5));
-        directedGraph.printPath("Melle");
+        System.out.println(directedGraph.BFS("Ibbenbueren", "Melle", 2));
+        directedGraph.printPath("Bad_Essen");
 
     }
 }

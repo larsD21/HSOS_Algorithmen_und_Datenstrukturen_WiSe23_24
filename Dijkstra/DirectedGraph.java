@@ -1,16 +1,13 @@
-package Praktikum5;
+package Dijkstra;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayDeque;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Queue;
+import java.util.*;
 
 public class DirectedGraph {
     public static final double INFINITY = Double.MAX_VALUE;
-    private Map<String,Node> nodes =  new HashMap<String,Node>();
+    private Map<String, Node> nodes =  new HashMap<String,Node>();
     public static DirectedGraph readGraph(String file) {
         DirectedGraph directedGraph = new DirectedGraph();
         try(BufferedReader bufferedReader = new BufferedReader(new FileReader(file))){
@@ -102,6 +99,35 @@ public class DirectedGraph {
             current = current.prev;
             if(current != null){
                 System.out.print(" <- ");
+            }
+        }
+    }
+
+    public void dijkstraShortestWay(String start, String dest){
+        MinPQ queue = new MinPQ(nodes.size());
+        for(Node v :  nodes.values()){
+            v.visited = false;
+            v.prev = null;
+            v.dist = INFINITY;
+
+            if(v.name.equals(start)){
+                v.dist = 0;
+            }
+
+            queue.insert(v.name, v.dist);
+        }
+
+        while(!queue.isEmpty()){
+            Node u = nodes.get(queue.extractData());
+            u.visited = true;
+
+            for(Edge e : u.neighbors){
+                Node v = e.dest;
+                if(!v.visited && v.dist > u.dist + e.weight){
+                    v.dist = u.dist + e.weight;
+                    v.prev = u;
+                    queue.update(v.name, v.dist);
+                }
             }
         }
     }
