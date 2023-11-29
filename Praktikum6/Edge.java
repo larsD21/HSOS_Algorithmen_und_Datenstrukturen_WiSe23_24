@@ -1,4 +1,4 @@
-package Dijkstra;
+package Praktikum6;
 
 public class Edge {
     public Node dest;

@@ -6,8 +6,11 @@ public class TestGraph {
 
         DirectedGraph directedGraph = DirectedGraph.readGraph(path);
 
-        System.out.println(directedGraph.BFS("Ibbenbueren", "Melle", 2));
-        directedGraph.printPath("Bad_Essen");
+        if(directedGraph.BFS("Wallenhorst", "Glandorf", 5)){
+            directedGraph.printPath("Glandorf");
+        } else{
+            System.out.println("Dest not in range of max");
+        }
 
     }
 }

@@ -1,9 +1,12 @@
-package Dijkstra;
+package Praktikum6;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayDeque;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Queue;
 
 public class DirectedGraph {
     public static final double INFINITY = Double.MAX_VALUE;
@@ -69,6 +72,10 @@ public class DirectedGraph {
         while (!queue.isEmpty()){
             Node u = queue.poll();
 
+            if(u.dist == max){
+                return u.equals(d);
+            }
+
             for(Edge e : u.neighbors){
                 Node v = e.dest;
                 if(!v.visited){
@@ -79,7 +86,7 @@ public class DirectedGraph {
                 }
             }
         }
-        return d.dist <= max;
+        return true;
     }
 
     public void printPath(String dest) {
@@ -103,7 +110,7 @@ public class DirectedGraph {
         }
     }
 
-    public void dijkstraShortestWay(String start, String dest){
+    public void dijkstra(String start){
         MinPQ queue = new MinPQ(nodes.size());
         for(Node v :  nodes.values()){
             v.visited = false;

@@ -1,4 +1,4 @@
-package Dijkstra;
+package Praktikum6;
 
 import java.util.ArrayList;
 import java.util.List;
