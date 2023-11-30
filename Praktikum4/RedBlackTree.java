@@ -190,7 +190,7 @@ public class RedBlackTree {
         int countRight = countBlack(node.right);
 
         if (node.color == RBTNode.black) {
-            return countLeft + 1;
+            return Math.max(countLeft, countRight) + 1;
         } else {
             return Math.max(countLeft, countRight);
         }
