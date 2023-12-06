@@ -1,6 +1,7 @@
 package Praktikum7;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Rucksack {
     public static ArrayList<Integer> rucksack(int g, int n, int[] a, int[] w) {
@@ -9,37 +10,44 @@ public class Rucksack {
 
         for (int i = 0; i <= g; i++) {
             W[0][i] = 0;
-            R[0][i] = -1; // Æ wurde durch -1 ersetzt, um ein leeres Element darzustellen
+            R[0][i] = -1;
         }
 
         for (int k = 1; k <= n; k++) {
             for (int j = 0; j <= g; j++) {
-                if (a[k] <= j && W[k - 1][j - a[k]] + w[k] > W[k - 1][j]) {
-                    R[k][j] = k;
-                    W[k][j] = W[k - 1][j - a[k]] + w[k];
+                if (a[k - 1] <= j && W[k - 1][j - a[k - 1]] + w[k - 1] > W[k - 1][j]) {
+                    R[k][j] = k - 1;
+                    W[k][j] = W[k - 1][j - a[k - 1]] + w[k - 1];
                 } else {
-                    R[k][j] = R[k - 1][j];
+                    R[k][j] = k - 1;
                     W[k][j] = W[k - 1][j];
                 }
             }
         }
 
-        // Zurückverfolgung der ausgewählten Gegenstände und ihrer Anzahl
-        ArrayList<Integer> selectedItems = new ArrayList<>();
-        int remainingCapacity = g;
-        for (int i = n; i > 0 && remainingCapacity > 0; i--) {
-            if (R[i][remainingCapacity] != R[i - 1][remainingCapacity]) {
-                int count = 0;
-                while (i > 0 && R[i][remainingCapacity] == i) {
-                    count++;
-                    remainingCapacity -= a[i];
-                    i--;
-                }
-                selectedItems.add(count);
-                i++;
-            }
-        }
+        ArrayList<Integer> quantities = new ArrayList<>();
+        int k = n;
+        int j = g;
 
-        return selectedItems;
+        while (k > 0 && j > 0) {
+            if (R[k][j] != R[k - 1][j]) {
+                int count = 0;
+                int tempK = k;
+
+                while (tempK > 0 && R[tempK][j] == R[tempK - 1][j]) {
+                    tempK--;
+                }
+
+                while (k >= tempK && j >= 0 && R[k][j] != R[k - 1][j]) {
+                    count++;
+                    j -= a[k - 1];
+                }
+
+                quantities.add(count);
+            }
+            k--;
+        }
+        return quantities;
+
     }
 }

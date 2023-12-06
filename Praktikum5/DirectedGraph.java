@@ -72,7 +72,7 @@ public class DirectedGraph {
         while (!queue.isEmpty()){
             Node u = queue.poll();
             if(u.dist == max){
-                return u.equals(d);
+                return false;
             }
             for(Edge e : u.neighbors){
                 Node v = e.dest;
@@ -81,11 +81,15 @@ public class DirectedGraph {
                     v.visited = true;
                     v.dist = u.dist +1;
                     v.prev = u;
+                    if(d.dist <= max){
+                        return true;
+                    }
                     queue.add(v);
                 }
+
             }
         }
-        return true;
+        return false;
     }
 
     public void printPath(String dest) {
