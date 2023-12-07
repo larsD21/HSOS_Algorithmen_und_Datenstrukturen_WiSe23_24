@@ -6,7 +6,7 @@ public class TestGraph {
 
         DirectedGraph directedGraph = DirectedGraph.readGraph(path);
 
-        if(directedGraph.BFS("Wallenhorst", "Glandorf", 4)){
+        if(directedGraph.BFS("Wallenhorst", "Glandorf", 3)){
             directedGraph.printPath("Glandorf");
         } else{
             System.out.println("Dest not in range of max");

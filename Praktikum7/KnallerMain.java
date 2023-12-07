@@ -31,9 +31,10 @@ public class KnallerMain {
                 a[i] = aList.get(i);
             }
 
-            ArrayList<Integer> quantities = Rucksack.rucksack(g, n, a, w);
-            System.out.println("Quantities of selected items: " + quantities);
+            ArrayList<Integer> result = Rucksack.rucksack(g, n, a, w);
 
+            // Ausgabe der ausgewählten Gegenstände und ihrer Anzahl
+            System.out.println(result.toString());
         } catch (IOException e){
             System.err.println("Fehler beim Lesen der Datei: " + e.getMessage());
         }
