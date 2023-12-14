@@ -5,36 +5,40 @@ import java.util.ArrayList;
 //8806
 public class Rucksack {
     public static ArrayList<Integer> rucksack(int g, int n, int[] a, int[] w) {
+        // Initialisiere den Hilfsvektor.
         int[][] W = new int[n + 1][g + 1];
-        int[][] R = new int[n + 1][g + 1];
 
         for (int i = 0; i <= n; i++) {
+            W[i][0] = 0;
+        }
+
+        for (int k = 1; k <= n; k++) {
             for (int j = 0; j <= g; j++) {
-                if (i == 0 || j == 0) {
-                    W[i][j] = 0;
-                    R[i][j] = 0;
-                } else if (a[i - 1] <= j && W[i - 1][j - a[i - 1]] + w[i - 1] > W[i - 1][j]) {
-                    W[i][j] = W[i - 1][j - a[i - 1]] + w[i - 1];
-                    R[i][j] = i;
+                if (a[k] <= j && W[k - 1][j - a[k]] + w[k] > W[k - 1][j]) {
+                    W[k][j] = W[k - 1][j - a[k]] + w[k];
                 } else {
-                    W[i][j] = W[i - 1][j];
-                    R[i][j] = R[i - 1][j];
+                    W[k][j] = W[k - 1][j];
                 }
             }
         }
 
+        System.out.println(W[n][g]);
 
-        //System.out.println(W[n][g]);
-        // Zurückverfolgung der ausgewählten Elemente im Rucksack
-        ArrayList<Integer> selectedItems = new ArrayList<>();
-        int i = n, j = g;
+        // Finde die optimale Lösung.
+        ArrayList<Integer> solution = new ArrayList<>();
+        int i = n;
+        int j = g;
         while (i > 0 && j > 0) {
-            if (R[i][j] != R[i - 1][j]) {
-                selectedItems.add(i - 1); // Index des ausgewählten Elements
-                j -= a[i - 1];
+            if (W[i][j] == W[i - 1][j]) {
+                i--;
+            } else {
+                solution.add(i);
+                j -= a[i];
+                i--;
             }
-            i--;
         }
-        return selectedItems;
+
+        // Rückgabe der optimalen Lösung.
+        return solution;
     }
 }
