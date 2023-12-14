@@ -7,34 +7,46 @@ import java.util.ArrayList;
 
 public class KnallerMain {
     public static void main(String[] args){
-        try(BufferedReader reader = new BufferedReader(new FileReader("Praktikum7/knaller.dat"))){
+        try (BufferedReader reader = new BufferedReader(new FileReader("Praktikum7/knaller.dat"))) {
             String line = reader.readLine();
-            int g = 1000;
-            int n = 0;
             ArrayList<Integer> aList = new ArrayList<>();
             ArrayList<Integer> wList = new ArrayList<>();
-            while(line != null){
+            ArrayList<Integer> id = new ArrayList<>();
+            int cnt = 1;
+            while (line != null) {
                 String[] values = line.split("\\s+");
-                aList.add(Integer.parseInt(values[3]));
-                wList.add(Integer.parseInt(values[2]) * Integer.parseInt(values[1]));
+
+                for(int i = 0; i<Integer.parseInt(values[0]); i++){
+                    aList.add(Integer.parseInt(values[3]));
+                    wList.add(Integer.parseInt(values[2]) * Integer.parseInt(values[1]));
+                    id.add(cnt);
+                }
+                cnt++;
                 line = reader.readLine();
             }
-            n = wList.size() - 1;
-            int[] w = new int[wList.size()];
-            int[] a = new int[aList.size()];
 
-            for(int i = 0; i < wList.size(); i++){
+            int n = aList.size();
+            int g = 1000;
+            int[] a = new int[aList.size()];
+            int[] w = new int[wList.size()];
+
+            for (int i = 0; i<n; i++){
+                a[i] = aList.get(i);
                 w[i] = wList.get(i);
             }
 
-            for(int i = 0; i < aList.size(); i++){
-                a[i] = aList.get(i);
+            System.out.println(id.toString());
+            int[] anzahl = new int[id.size()];
+            ArrayList<Integer> result = Rucksack.rucksack(g, n, a, w);
+            //System.out.println(a.length);
+            for(int i = 0; i<result.size(); i++){
+                anzahl[i] += result.get(i);
             }
 
-            ArrayList<Integer> result = Rucksack.rucksack(g, n, a, w);
+            for(Integer i : anzahl){
+                System.out.println(i+1 + " : " + i + " mal");
+            }
 
-            // Ausgabe der ausgewählten Gegenstände und ihrer Anzahl
-            System.out.println(result.toString());
         } catch (IOException e){
             System.err.println("Fehler beim Lesen der Datei: " + e.getMessage());
         }

@@ -109,6 +109,8 @@ public class DirectedGraph {
                 System.out.print(" <- ");
             }
         }
+
+        System.out.println(" Distance: " +  d.dist);
     }
 
     public void dijkstra(String start){
