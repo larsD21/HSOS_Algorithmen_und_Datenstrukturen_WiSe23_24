@@ -5,7 +5,6 @@ import java.util.ArrayList;
 //8806
 public class Rucksack {
     public static ArrayList<Integer> rucksack(int g, int n, int[] a, int[] w) {
-        // Initialisiere den Hilfsvektor.
         int[][] W = new int[n + 1][g + 1];
 
         for (int i = 0; i <= n; i++) {
@@ -24,7 +23,6 @@ public class Rucksack {
 
         System.out.println(W[n][g]);
 
-        // Finde die optimale Lösung.
         ArrayList<Integer> solution = new ArrayList<>();
         int i = n;
         int j = g;
@@ -38,7 +36,6 @@ public class Rucksack {
             }
         }
 
-        // Rückgabe der optimalen Lösung.
         return solution;
     }
 }
