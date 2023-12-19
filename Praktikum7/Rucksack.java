@@ -21,7 +21,7 @@ public class Rucksack {
             }
         }
 
-        System.out.println(W[n][g]);
+        //System.out.println(W[n][g]);
 
         ArrayList<Integer> solution = new ArrayList<>();
         int i = n;
