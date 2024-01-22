@@ -15,7 +15,7 @@ public class KnallerMain {
             ArrayList<Integer> krach = new ArrayList<>();
             int cnt = 1;
             while (line != null) {
-                String[] values = line.split("\\s+");
+                String[] values = line.trim().split("\\s+");
                 krach.add(Integer.parseInt(values[2]) * Integer.parseInt(values[1]));
                 for(int i = 0; i<Integer.parseInt(values[0]); i++){
                     aList.add(Integer.parseInt(values[3]));
@@ -39,18 +39,25 @@ public class KnallerMain {
             int[] anzahl = new int[id.get(id.size()-1)];
             ArrayList<Integer> result = Rucksack.rucksack(g, n, a, w);
 
+            int gesPreis = 0;
+
             for(Integer i : result){
                 int iID = id.get(i);
+                gesPreis += a[i];
                 anzahl[iID-1]++;
             }
 
             int gesKrach = 0;
             for(int i = 0; i<anzahl.length; i++){
-                System.out.println((i+1) + " : " + anzahl[i]);
-                gesKrach += anzahl[i]*krach.get(i);
+                if (anzahl[i]>0) {
+                    System.out.println((i+1) + " : " + anzahl[i]);
+                    gesKrach += anzahl[i]*krach.get(i);
+                }
+
             }
 
-            System.out.print(gesKrach);
+            System.out.println("Gesamter Krach: " + gesKrach);
+            System.out.println("Gesamtpreis: " + gesPreis);
         } catch (IOException e){
             System.err.println("Fehler beim Lesen der Datei: " + e.getMessage());
         }
