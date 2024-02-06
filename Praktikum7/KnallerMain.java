@@ -38,6 +38,8 @@ public class KnallerMain {
 
             int[] anzahl = new int[id.get(id.size()-1)];
             ArrayList<Integer> result = Rucksack.rucksack(g, n, a, w);
+            System.out.println(result.toString());
+            System.out.println(result.size());
 
             int gesPreis = 0;
 
